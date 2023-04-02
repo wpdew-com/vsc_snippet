@@ -1,0 +1,291 @@
+<html>
+
+<head> 
+
+    <!DOCTYPE html>
+    <html lang="en">
+
+    <head>
+        
+
+        <title>VSCode Snippet Generator</title>
+        <meta charset="UTF-8">
+        <meta name="description"
+            content="A tool for creating codes for copying and pasting Visual Studio Code code snippets. With one button it formats it, and handles escape processing such as $ signs.">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+       
+        <link rel="alternate" hreflang="en" href="index.html">
+        <link rel="alternate" hreflang="x-default" href="index.html">
+        <link href="https://fonts.googleapis.com/css?family=Noto+Sans+JP&amp;display=swap" rel="stylesheet">
+        <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
+       <!-- <link rel='stylesheet' href='style.css' type='text/css' media='all' />-->
+<style>
+html, body, div, span, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, address, em, img, dl, dt, dd, ol, ul, li, form, label,
+table, caption, tbody, tfoot, thead, tr, th, td, article, aside, figcaption, figure, footer, header, menu, nav, section, time, video {
+    margin: 0px;
+    padding: 0px;
+    border: none;
+    outline: none;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Noto Sans JP', sans-serif;
+}
+
+.header {
+    padding: 20px 0px;
+    background-color: #3388dd;
+    text-align: center;
+    color: #fff;
+}
+.meta{
+    display: flex;
+    justify-content: space-between;
+}
+/* all ibput in .meta set wisth 100% */
+.meta > div > input {
+    width: 100%;
+}
+.meta > div {
+    width: 33%;
+}
+
+article {
+    width: 98%;
+    padding: 0px 0px 60px;
+    margin: 0px auto;
+}
+@media print, (min-width: 1000px) {
+    article {
+        width: 900px;
+    }
+}
+
+section {
+    padding: 10px 0px;
+}
+
+nav {
+    margin: 10px 0px 0px;
+    text-align: center;
+}
+
+input {
+    padding: .5em;
+}
+
+textarea {
+    width: 100%;
+    min-height: 200px;
+    font-family: 'Noto Sans JP', sans-serif;
+}
+
+button {
+    display: inline-block;
+    position: relative;
+    padding: 0.5em;
+    margin: 0px 0px 0px 0px;
+    width: 12em;
+    border: none;
+    background-color: #3388dd;
+    color: #fff;
+    font-size: 16px;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    appearance: none;
+}
+button:hover {
+    cursor: pointer;
+}
+button:after {
+    position: absolute;
+    bottom: -2px;
+    left: 0px;
+    width: 100%;
+    height: 3px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    background-color: #18548f;
+    content: "";
+}
+button:active {
+    transform: translateY(5px);
+}
+button:active:after {
+    height: 0px;
+}
+
+.prefix {
+    margin: 0px 0px 10px;
+}
+
+.popup {
+    position: fixed;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    transform: translateY(100%);
+    padding: 30px 1em;
+    margin: 0px;
+    background-color: #3388dd;
+    color: #fff;
+    text-align: center;
+    opacity: 0;
+    transition: 0.5s;
+}
+.popup.js_active {
+    transform: translateY(0%);
+    opacity: 1;
+}
+
+.adsense {
+    margin: 30px 0px 0px;
+}
+
+.btn_share {
+    display: flex;
+    justify-content: center;
+}
+.btn_share > a {
+    display: flex;
+    position: relative;
+    justify-content: center;
+    align-items: center;
+    width: 90px;
+    height: 90px;
+    margin: 0px 10px;
+    border-radius: 50%;
+    color: #fff;
+    font-size: 45px;
+    text-decoration: none;
+}
+.btn_share > a:before {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    font-family: "Font Awesome 5 Brands";
+    font-weight: 400;
+}
+.btn_share > .btn_share_fb {
+    background-color: #3b5998;
+}
+.btn_share > .btn_share_fb:before {
+    content: "\f39e";
+}
+.btn_share > .btn_share_twitter {
+    background-color: #1da1f2;
+}
+.btn_share > .btn_share_twitter:before {
+    content: "\f099";
+}
+.btn_share > .btn_share_hatena {
+    background-color: #008fde;
+}
+.btn_share > .btn_share_hatena:before {
+    font-family: Verdana;
+    font-weight: bold;
+    content: "B!";
+}
+
+</style>
+       <!-- <script type='text/javascript' src='js/jquery-3.4.1.min.js'></script>
+        <script type='text/javascript' src='js/functions.js'></script>-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+jQuery(function($) {
+    let resetBefore = false;
+    $('.code_before').click(function() {
+        if(resetBefore == false) {
+            $(this).text('');
+            resetBefore = true;
+        }
+    });
+
+    $('.btn_translation').click(function() {
+        var name = $('.name > input').val();
+        var snippet = $('.prefix > input').val();
+        var description = $('.description > input').val();
+        var output = '    "' + name + '": {' + "\n";
+        output += '        "prefix": "' + snippet + '",' + "\n";
+        output += '        "body": [' + "\n";
+        var code = $('.code_before').val().replace(/\r\n|\r/g, "\n");
+        var lines = code.split('\n');
+        for(var i = 0; i < lines.length; i++) {
+            var str = lines[i];
+            str = str.replace(/\\/g, '\\\\');
+            str = str.replace(/\"/g, '\\\"');
+            str = str.replace(/\$/g, '\\\\$');
+            str = '            \"' + str + '\",' + "\n";
+            output = output + str;
+        }
+        output += '        ],' + "\n";
+        output += '        "description": "'+description+'"' + "\n";
+        output += '    },' + "\n";
+        $('.code_after').text(output);
+    });
+
+    $('.btn_copy').click(function() {
+        var clipboard = $('<textarea></textarea>');
+        clipboard.text( $('.code_after').text() );
+        $(this).append(clipboard);
+        clipboard.select();
+        document.execCommand('copy');
+        clipboard.remove();
+        
+        $('.popup').addClass('js_active');
+        setTimeout(function() {
+            $('.popup').removeClass('js_active');
+        }, 2000);
+    });
+
+    $('.popup').hover(function() {
+        $(this).removeClass('js_active');
+    });
+});
+
+</script>
+</head>
+
+<body>
+    
+
+    
+
+    <article>
+        <section>
+            <div class="meta">
+                <div class="name">name:<br/> <input type="text"></div>
+                <div class="prefix">prefix:<br/> <input type="text"></div>
+                <div class="description">description:<br/> <input type="text"></div>
+            </div>   
+
+<textarea class="code_before">"How to Use"
+    - Enter the snippet prefix (the keyword when calling a snippet) where it says "prefix" at the top.
+    - Paste the source code into the text area.
+    - Click the "Generate a Snippet" button.
+    - The snippet will appear in the text area below. Copy it and paste it into the Visual Studio Code's settings file.
+</textarea>
+            <nav>
+                <button class="btn_translation">Generate a Snippet</button>
+            </nav>
+        </section>
+
+        <section>
+            <textarea class="code_after"></textarea>
+            <nav>
+                <button class="btn_copy">Copy to the Clipboard</button>
+            </nav>
+        </section>
+
+        
+
+        <p class="popup">Copied</p>
+    </article>
+
+    
+</body>
+
+</html>

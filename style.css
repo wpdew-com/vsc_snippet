@@ -1,0 +1,169 @@
+html, body, div, span, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, address, em, img, dl, dt, dd, ol, ul, li, form, label,
+table, caption, tbody, tfoot, thead, tr, th, td, article, aside, figcaption, figure, footer, header, menu, nav, section, time, video {
+    margin: 0px;
+    padding: 0px;
+    border: none;
+    outline: none;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Noto Sans JP', sans-serif;
+}
+
+.header {
+    padding: 20px 0px;
+    background-color: #3388dd;
+    text-align: center;
+    color: #fff;
+}
+.meta{
+    display: flex;
+    justify-content: space-between;
+}
+/* all ibput in .meta set wisth 100% */
+.meta > div > input {
+    width: 100%;
+}
+.meta > div {
+    width: 33%;
+}
+
+article {
+    width: 98%;
+    padding: 0px 0px 60px;
+    margin: 0px auto;
+}
+@media print, (min-width: 1000px) {
+    article {
+        width: 900px;
+    }
+}
+
+section {
+    padding: 10px 0px;
+}
+
+nav {
+    margin: 10px 0px 0px;
+    text-align: center;
+}
+
+input {
+    padding: .5em;
+}
+
+textarea {
+    width: 100%;
+    min-height: 200px;
+    font-family: 'Noto Sans JP', sans-serif;
+}
+
+button {
+    display: inline-block;
+    position: relative;
+    padding: 0.5em;
+    margin: 0px 0px 0px 0px;
+    width: 12em;
+    border: none;
+    background-color: #3388dd;
+    color: #fff;
+    font-size: 16px;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    appearance: none;
+}
+button:hover {
+    cursor: pointer;
+}
+button:after {
+    position: absolute;
+    bottom: -2px;
+    left: 0px;
+    width: 100%;
+    height: 3px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    background-color: #18548f;
+    content: "";
+}
+button:active {
+    transform: translateY(5px);
+}
+button:active:after {
+    height: 0px;
+}
+
+.prefix {
+    margin: 0px 0px 10px;
+}
+
+.popup {
+    position: fixed;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    transform: translateY(100%);
+    padding: 30px 1em;
+    margin: 0px;
+    background-color: #3388dd;
+    color: #fff;
+    text-align: center;
+    opacity: 0;
+    transition: 0.5s;
+}
+.popup.js_active {
+    transform: translateY(0%);
+    opacity: 1;
+}
+
+.adsense {
+    margin: 30px 0px 0px;
+}
+
+.btn_share {
+    display: flex;
+    justify-content: center;
+}
+.btn_share > a {
+    display: flex;
+    position: relative;
+    justify-content: center;
+    align-items: center;
+    width: 90px;
+    height: 90px;
+    margin: 0px 10px;
+    border-radius: 50%;
+    color: #fff;
+    font-size: 45px;
+    text-decoration: none;
+}
+.btn_share > a:before {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    font-family: "Font Awesome 5 Brands";
+    font-weight: 400;
+}
+.btn_share > .btn_share_fb {
+    background-color: #3b5998;
+}
+.btn_share > .btn_share_fb:before {
+    content: "\f39e";
+}
+.btn_share > .btn_share_twitter {
+    background-color: #1da1f2;
+}
+.btn_share > .btn_share_twitter:before {
+    content: "\f099";
+}
+.btn_share > .btn_share_hatena {
+    background-color: #008fde;
+}
+.btn_share > .btn_share_hatena:before {
+    font-family: Verdana;
+    font-weight: bold;
+    content: "B!";
+}
